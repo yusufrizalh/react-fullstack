@@ -14,6 +14,11 @@ const ListProduct = () => {
     setProducts(response.data);
   };
 
+  const deleteProduct = async id => {
+    await axios.delete(`http://localhost:8001/products/${id}`);
+    getProducts();
+  };
+
   return (
     <div className="container">
       <h2 className="box">List Products</h2>
@@ -31,16 +36,34 @@ const ListProduct = () => {
             </tr>
           </thead>
           <tbody>
-            { products.map((product, index) => 
-                <tr key={product.id}>
-                    <td>{ index + 1 }</td>
-                    <td>{ product.title }</td>
-                    <td>{ product.price }</td>
-                    <td>
-                        Edit | Delete
-                    </td>
-                </tr>
-            ) }
+            {products.map((product, index) =>
+              <tr key={product.id}>
+                <td>
+                  {index + 1}
+                </td>
+                <td>
+                  {product.title}
+                </td>
+                <td>
+                  {product.price}
+                </td>
+                <td>
+                  <Link
+                    to={`/edit/${product.id}`}
+                    className="button is-small is-info is-outlined"
+                  >
+                    Edit
+                  </Link>
+                  &nbsp;
+                  <button
+                    className="button is-small is-danger is-outlined"
+                    onClick={() => deleteProduct(product.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

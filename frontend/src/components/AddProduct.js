@@ -20,11 +20,12 @@ const AddProduct = () => {
     <div className="container">
       <h2 className="box">Add New Product</h2>
       <form onSubmit={saveProduct} className="box">
-        <div className="field" block>
+        <div className="field block">
           <label htmlFor="title" className="label">
             Title
           </label>
           <input
+            required
             type="text"
             className="input"
             placeholder="Enter title here"
@@ -32,11 +33,12 @@ const AddProduct = () => {
             onChange={event => setTitle(event.target.value)}
           />
         </div>
-        <div className="field" block>
+        <div className="field block">
           <label htmlFor="price" className="label">
             Price
           </label>
           <input
+            required
             type="text"
             className="input"
             placeholder="Enter price here"

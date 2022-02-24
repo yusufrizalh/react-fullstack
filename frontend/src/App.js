@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bulma/css/bulma.min.css";
 import ListProduct from "./components/ListProduct";
 import AddProduct from "./components/AddProduct";
+import EditProduct from "./components/EditProduct";
 
 const App = () => {
   return (
@@ -16,6 +17,9 @@ const App = () => {
               </Route>
               <Route path="/addproduct">
                 <AddProduct />
+              </Route>
+              <Route path="/edit/:id">
+                <EditProduct />
               </Route>
             </Switch>
           </div>
