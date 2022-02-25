@@ -5,6 +5,8 @@ import Navbar from "../navbar/Navbar";
 
 const ListCategory = () => {
   const [categories, setCategories] = useState([]);
+  const [q, setQ] = useState("");
+  const [searchParam] = useState(["name"]);
 
   useEffect(() => {
     getCategories();
@@ -19,6 +21,16 @@ const ListCategory = () => {
     await axios.delete(`http://localhost:8001/categories/${id}`);
     getCategories();
   };
+
+  function search(items) {
+    return items.filter(item => {
+      return searchParam.some(newItem => {
+        return (
+          item[newItem].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
+        );
+      });
+    });
+  }
 
   return (
     <div>
@@ -41,6 +53,8 @@ const ListCategory = () => {
                   name="search-form"
                   id="search-form"
                   placeholder="Search by Category Name"
+                  value={q}
+                  onChange={event => setQ(event.target.value)}
                 />
               </label>
             </div>
@@ -56,7 +70,7 @@ const ListCategory = () => {
               </tr>
             </thead>
             <tbody>
-              {categories.map((category, index) =>
+              {search(categories).map((category, index) =>
                 <tr key={category.id}>
                   <td>
                     {index + 1}
