@@ -1,7 +1,7 @@
 import express from "express";
 import db from "./config/database.js";
 import cors from "cors";
-import productRoutes from "./routes/index.js";
+import routes from "./routes/routes.js";
 
 const app = express();
 
@@ -14,6 +14,6 @@ try {
 
 app.use(cors());
 app.use(express.json());
-app.use("/products", productRoutes);
+app.use("/", routes);
 
 app.listen(8001, () => console.log("Server running at http://localhost:8001"));
