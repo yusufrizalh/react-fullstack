@@ -5,6 +5,8 @@ import Navbar from "../navbar/Navbar";
 
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
+  const [q, setQ] = useState("");
+  const [searchParam] = useState(["title"]);
 
   useEffect(() => {
     getProducts();
@@ -19,6 +21,16 @@ const ListProduct = () => {
     await axios.delete(`http://localhost:8001/products/${id}`);
     getProducts();
   };
+
+  function search(items) {
+    return items.filter(item => {
+      return searchParam.some(newItem => {
+        return (
+          item[newItem].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
+        );
+      });
+    });
+  }
 
   return (
     <div>
@@ -41,6 +53,8 @@ const ListProduct = () => {
                   name="search-form"
                   id="search-form"
                   placeholder="Search by Title"
+                  value={q}
+                  onChange={event => setQ(event.target.value)}
                 />
               </label>
             </div>
@@ -57,7 +71,7 @@ const ListProduct = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product, index) =>
+              {search(products).map((product, index) =>
                 <tr key={product.id}>
                   <td>
                     {index + 1}
